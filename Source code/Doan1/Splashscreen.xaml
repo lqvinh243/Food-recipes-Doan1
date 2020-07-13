@@ -1,0 +1,48 @@
+﻿<Window x:Class="Doan1.Splashscreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Doan1"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+         TextElement.FontSize="13"
+         TextOptions.TextFormattingMode="Ideal"
+         TextOptions.TextRenderingMode="Auto"
+         Background="{DynamicResource MaterialDesignPaper}"
+         FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Splashscreen" Height="550" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None">
+    <Window.Resources>
+        <local:RelativetoAbsoluteConverter x:Key="convertpath"></local:RelativetoAbsoluteConverter>
+    </Window.Resources>
+    <Grid x:Name="myGrid" Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="0.1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Text="WELLCOME!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"></TextBlock>
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="Món ăn hôm nay :" FontSize="20" Margin="20 0 0 0"></TextBlock>
+                <TextBlock x:Name="NameFood" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" TextWrapping="Wrap" Text="{Binding NameFood}"></TextBlock>
+                <TextBlock x:Name="DescriptionFood" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0 15 15 0" Text="{Binding FoodDescription}"></TextBlock>
+            </StackPanel>
+            <CheckBox Content="Do not show againt" Grid.Row="3" Name="ckbShow"></CheckBox>
+        </Grid>
+        <Grid x:Name="Background_img" Grid.Column="1">
+            <Image Source="{Binding Food_Image,Converter={StaticResource convertpath}}"></Image>
+        </Grid>
+        <TextBlock Text="Loading ..." Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" FontSize="20"></TextBlock>
+    </Grid>
+</Window>

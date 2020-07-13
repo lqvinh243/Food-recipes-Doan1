@@ -1,0 +1,205 @@
+﻿<Window x:Class="Doan1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Doan1"
+        mc:Ignorable="d"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.FontWeight="Regular"
+         TextElement.FontSize="13"
+         TextOptions.TextFormattingMode="Ideal"
+         TextOptions.TextRenderingMode="Auto"
+         FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="MainWindow" Height="750" Width="1000" WindowStyle="None" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <local:RelativetoAbsoluteConverter x:Key="convertPath"></local:RelativetoAbsoluteConverter>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Background="#FF9C27B0">
+            <TextBlock Text="Chương trình công thức nấu ăn" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontFamily="Champagne &amp; Limousines" />
+            <Button x:Name="btnClose"  Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 20 0">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Content" Value="{materialDesign:PackIcon Kind=Power, Size=25}"/>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+        <TabControl Grid.Row="2" Background="#FF464040" BorderBrush="#FF5B2CAE">
+            <TabItem Height="30">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Home">
+                            <materialDesign:PackIcon.LayoutTransform>
+                                <ScaleTransform CenterX="0.5" CenterY="0.5"  ScaleX="1.5" ScaleY="1.5"/>
+                            </materialDesign:PackIcon.LayoutTransform>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="HOME" Margin="0 0 0 0" FontSize="15" VerticalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.1*"></RowDefinition>
+                        <RowDefinition Height="0.1*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="0.1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <WrapPanel Margin="10 10 0 0">
+                        <TextBlock Text="Tìm kiếm" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20" Margin="0 10 20 0" Foreground="White"></TextBlock>
+                        <AdornerDecorator Grid.Column="1">
+                            <TextBox Width="300" Height="30" Foreground="Wheat" Name="txtSeach"></TextBox>
+                        </AdornerDecorator>
+                        <Button HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="2" Margin="0" Name="btnUnFilter">
+                            <WrapPanel>
+                                <Label Content="Hủy lọc"></Label>
+                                <materialDesign:PackIcon Kind="FilterRemove">
+                                    <materialDesign:PackIcon.LayoutTransform>
+                                        <ScaleTransform CenterX="0.5" CenterY="0.5"  ScaleX="1.5" ScaleY="1.5"/>
+                                    </materialDesign:PackIcon.LayoutTransform>
+                                </materialDesign:PackIcon>
+                            </WrapPanel>
+                        </Button>
+                        <StackPanel HorizontalAlignment="Right">
+                            <Button FontSize="20" Content="Thêm món ăn mới" Name="addNewFood"></Button>
+                        </StackPanel>
+                    </WrapPanel>
+                    <TextBlock x:Name="txtSeachRs" VerticalAlignment="Center" Grid.Row="1" FontStyle="Oblique" Margin="20 0 0 0" FontSize="20" Foreground="White"></TextBlock>
+                    <ListView Name="listFood" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="2" >
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="auto"  />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Delete" Name="del_Item"></MenuItem>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <materialDesign:Card Name="HomeCard" MouseDoubleClick="HomeCard_MouseDoubleClick">
+                                    
+                                    <StackPanel  Width="350" Margin="10">
+                                        
+                                        <Grid Height="300">
+                                            <Image Source="{Binding Food_Image,Converter={StaticResource convertPath}}"  RenderOptions.BitmapScalingMode="HighQuality"></Image>
+                                        </Grid>
+                                        <Grid >
+                                            <TextBlock Text="{Binding NameFood}"  FontSize="20" Margin="10"></TextBlock>
+                                            <Button HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="2" Margin="0" Name="btnHeart" Click="btnHeart_Click">
+                                                <materialDesign:PackIcon Kind="Heart" Foreground="{Binding FavoriteFood}">
+                                                    <materialDesign:PackIcon.LayoutTransform>
+                                                        <ScaleTransform CenterX="0.5" CenterY="0.5"  ScaleX="1.5" ScaleY="1.5"/>
+                                                    </materialDesign:PackIcon.LayoutTransform>
+                                                </materialDesign:PackIcon>
+                                            </Button>
+                                        </Grid>
+                                        <TextBlock Text="{Binding FoodDescription}" Grid.Row="1" TextWrapping="Wrap"></TextBlock>
+                                    </StackPanel>
+                                </materialDesign:Card>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Background="{x:Null}" BorderBrush="{x:Null}" Name="btnPre" IsEnabled="{Binding pre}">
+                            <materialDesign:PackIcon Kind="PagePrevious">
+                                <materialDesign:PackIcon.LayoutTransform>
+                                    <ScaleTransform CenterX="0.5" CenterY="0.5"  ScaleX="1.5" ScaleY="1.5"/>
+                                </materialDesign:PackIcon.LayoutTransform>
+                            </materialDesign:PackIcon>
+                        </Button>
+                        <StackPanel Orientation="Horizontal" Name="Page">
+                            <TextBlock Name="PageNow" Text="{Binding PageNow}" FontSize="20" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"></TextBlock>
+                            <TextBlock Text="/" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="White" FontWeight="Bold"></TextBlock>
+                            <TextBlock Name="TotalPage" Text="{Binding PageTotal}" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="White" FontWeight="Bold"></TextBlock>
+                        </StackPanel>
+
+                        <Button  Background="{x:Null}" BorderBrush="{x:Null}" Margin="0 0 0 0" Name="btnNext" IsEnabled="{Binding next}">
+                            <materialDesign:PackIcon Kind="PageNext">
+                                <materialDesign:PackIcon.LayoutTransform>
+                                    <ScaleTransform CenterX="0.5" CenterY="0.5"  ScaleX="1.5" ScaleY="1.5"/>
+                                </materialDesign:PackIcon.LayoutTransform>
+                            </materialDesign:PackIcon>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Height="30">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Heart">
+                            <materialDesign:PackIcon.LayoutTransform>
+                                <ScaleTransform CenterX="0.5" CenterY="0.5"  ScaleX="1.5" ScaleY="1.5"/>
+                            </materialDesign:PackIcon.LayoutTransform>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="FAVORITE FOOD" Margin="0 0 0 0" FontSize="15" VerticalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="63*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="179*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.1*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Danh sách các món ăn yêu thích" FontSize="25" VerticalAlignment="Center" Foreground="White" Margin="10,19,0,9.4" Grid.ColumnSpan="3"></TextBlock>
+                    <ListView Name="listFavoriteFood" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.ColumnSpan="3" Margin="0,58,0,0.4" Grid.RowSpan="2">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="auto" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <materialDesign:Card Name="Favorite" MouseDoubleClick="Favorite_MouseDoubleClick">
+                                    <StackPanel  Width="350" Margin="10">
+                                        <Grid Height="300">
+                                            <Image Source="{Binding Food_Image,Converter={StaticResource convertPath}}"  RenderOptions.BitmapScalingMode="HighQuality"></Image>
+                                        </Grid>
+                                        <Grid >
+                                            <TextBlock Text="{Binding NameFood}"  FontSize="20" Margin="10"></TextBlock>
+                                            <Button HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="2" Margin="0">
+                                                <materialDesign:PackIcon Kind="Heart" Foreground="{Binding FavoriteFood}">
+                                                    <materialDesign:PackIcon.LayoutTransform>
+                                                        <ScaleTransform CenterX="0.5" CenterY="0.5"  ScaleX="1.5" ScaleY="1.5"/>
+                                                    </materialDesign:PackIcon.LayoutTransform>
+                                                </materialDesign:PackIcon>
+                                            </Button>
+                                        </Grid>
+                                        <TextBlock Text="{Binding FoodDescription}" Grid.Row="1" TextWrapping="Wrap"></TextBlock>
+                                    </StackPanel>
+                                </materialDesign:Card>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Height="30">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="About">
+                            <materialDesign:PackIcon.LayoutTransform>
+                                <ScaleTransform CenterX="0.5" CenterY="0.5"  ScaleX="1.5" ScaleY="1.5"/>
+                            </materialDesign:PackIcon.LayoutTransform>
+                        </materialDesign:PackIcon>
+                        <TextBlock Text="ABOUT" Margin="0 0 0 0" FontSize="15" VerticalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <StackPanel Margin="20">
+                    <TextBlock FontSize="20" Foreground="White">Chương trình do 3 người thực hiện gồm :</TextBlock>
+                    <TextBlock FontSize="17" Foreground="White">1760243 : Lê Quang Vinh</TextBlock>
+                    <TextBlock FontSize="17" Foreground="White">1760195 : Võ Quốc Thọ</TextBlock>
+                    <TextBlock FontSize="17" Foreground="White">1760019 : Trần Minh Chính</TextBlock>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
